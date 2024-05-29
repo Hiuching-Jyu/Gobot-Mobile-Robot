@@ -28,10 +28,27 @@ Follow section 6.3 in "Multi-Machine Communication Configuration" to modify the 
 
 If you want to connect your phone to the robot's hotspot, change a specific parameter back to 1 as described in the configuration guide and use the WonderAi app. Currently, it's not very useful, so it's better not to change it.
 
-## 3. VNC Remote Connection
-Install VNC Viewer on your computer, connect to `hiwonder`'s IP address `172.20.10.2`, and use the password `hiwonder` to view and control the Jetson Nano on a larger screen.
+## 3. Remote Connection From Personal Computer
+- Method 1: Install VNC Viewer on your computer, connect to `hiwonder`'s IP address `172.20.10.2`, and use the password `hiwonder` to view and control the Jetson Nano on a larger screen.
+- Method 2: ssh hiwonder@172.20.10.2
+- Method 3: no machine, refer to https://drive.google.com/drive/folders/1GBiwRRy0NYdtOc2z0U2wGOYut7UGFls6
+- Method 4: using "scp" to transfer files from Jetson Nano to Personal Computer
 
-## 4. Inertial Navigation IMU
+## 4. Installation
+- sudo apt-get install ros-melodic-ackermann-msgs
+- sudo apt-get install ros-melodic-random-numbers
+- sudo apt-get install ros-melodic-opencv-apps
+- sudo apt-get install ros-melodic-pcl-conversations
+- sudo apt-get install ros-melodic-pcl-ros
+- sudo apt-get install ros-melodic-hector*
+- sudo apt-get install ros-melodic-amcl
+- sudo apt-get install ros-melodic-map-server
+- sudo apt-get install ros-melodic-move-base
+- sudo apt-get install ros-melodic-teleop-twist*
+follow the readme in mcskf, and install stuff from ydlidar-SDK
+
+## 5. IMU Setup
+IMU file -- wit_ros_ws
 Control file: `imu_usb.py`. Currently ensures all sensors output information separately. To run:
 ```bash
 python3 imu_usb.py
