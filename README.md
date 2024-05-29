@@ -35,6 +35,7 @@ If you want to connect your phone to the robot's hotspot, change a specific para
 - Method 4: using "scp" to transfer files from Jetson Nano to Personal Computer
 
 ## 4. Installation
+```bash
 - sudo apt-get install ros-melodic-ackermann-msgs
 - sudo apt-get install ros-melodic-random-numbers
 - sudo apt-get install ros-melodic-opencv-apps
@@ -46,6 +47,7 @@ If you want to connect your phone to the robot's hotspot, change a specific para
 - sudo apt-get install ros-melodic-move-base
 - sudo apt-get install ros-melodic-teleop-twist*
 follow the readme in mcskf, and install stuff from ydlidar-SDK
+```
 
 ## 5. IMU Setup
 IMU file -- wit_ros_ws
@@ -53,3 +55,4 @@ Control file: `imu_usb.py`. Currently ensures all sensors output information sep
 ```bash
 python3 imu_usb.py
 launch wit_ros_ws imu wit_imu.launch
+```
