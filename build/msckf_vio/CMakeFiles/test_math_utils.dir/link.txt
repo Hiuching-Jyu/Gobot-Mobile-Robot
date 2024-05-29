@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -rdynamic CMakeFiles/test_math_utils.dir/test/math_utils_test.cpp.o -o /home/hiwonder/chasis_ws/devel/lib/msckf_vio/test_math_utils   -L/home/hiwonder/chasis_ws/build/gtest  -Wl,-rpath,/home/hiwonder/chasis_ws/build/gtest:/home/hiwonder/chasis_ws/build/gtest/googlemock/gtest ../gtest/googlemock/gtest/libgtest.so -lpthread 

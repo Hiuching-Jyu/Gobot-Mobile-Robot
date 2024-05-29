@@ -1,0 +1,2 @@
+msckf_vio:wit_ros_ws/src:ydlidar_ws/src
+-DCATKIN_DEVEL_PREFIX=/home/hiwonder/chasis_ws/devel -DCMAKE_INSTALL_PREFIX=/home/hiwonder/chasis_ws/install -G Unix Makefiles

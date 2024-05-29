@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+ <include file="/home/hiwonder/chasis_ws/src/ydlidar_ws/src/launch/X3.launch" />
+ <include file="/home/hiwonder/chasis_ws/src/msckf_vio/launch/msckf_vio_euroc.launch" />
+ <include file="/home/hiwonder/chasis_ws/src/wit_ros_ws/src/launch/wit_imu.launch" />
+ 
+ 
+ <!--node pkg="tf" type="static_transform_publisher"
+	 name="map_to_odom" args="0.0 0.0 0.0 0 0 0.0 /odom /base_link 40"/-->
+
+ <!--node pkg="tf" type="static_transform_publisher" 
+	name="base_frame_laser" args="0 0 0 0 0 0 /base_link /laser_frame 40" /-->
+  
+ <node pkg="tf" type="static_transform_publisher" 
+	 name="odom_to_basefp" args="0 0 0 0 0 0 /odom /base_footprint 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="base_to_imu" args="0 0 0 1.57 0 0 /base_footprint /imu 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="base_to_laser" args="0.056 -0.139 -0.0918 3.14 0 3.14 /base_footprint /laser 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="base_to_camera" args="-0.34 -0.3075 0.86 1.57 0 1.57 /base_footprint /camera 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="baselink_to_basefootprint" args="0.0 0.0 -0.25 0 0 0.0 /base_link /base_footprint 30"/>
+
+
+ <!--<node pkg="rviz" type="rviz" name="rviz"args="-d $(find hector_slam_launch)/rviz_cfg/mapping_demo.rviz"/>-->
+  <include file="$(find hector_mapping)/launch/mapping_default.launch" />
+  <node pkg="rviz" type="rviz" name="rviz" args="-d home/hiwonder/ydlidar_ws/src/ydlidar_ros_driver-master/launch/lidar.rviz" />
+  <include file="$(find hector_geotiff)/launch/geotiff_mapper.launch" />
+</launch>
+

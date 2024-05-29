@@ -1,0 +1,101 @@
+<launch>
+ <param name="/use_sim_time" value="false"/>
+  <!--????-->
+ <include file="/home/hiwonder/chasis_ws/src/ydlidar_ws/src/launch/X3.launch" />
+ <!--include file="/home/hiwonder/chasis_ws/src/msckf_vio/launch/usb_cam.launch" /-->
+ <include file="/home/hiwonder/chasis_ws/src/msckf_vio/launch/msckf_vio_euroc.launch" />
+ <include file="/home/hiwonder/chasis_ws/src/wit_ros_ws/src/launch/wit_imu.launch" />
+
+
+ <arg name="map_file" default="/home/hiwonder/maps/mapA3011_529_2.yaml"/>
+ <node name="map_server_test" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+ <node pkg="tf" type="static_transform_publisher" 
+	 name="odom_to_basefp" args="0 0 0 0 0 0 /odom /base_footprint 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="base_to_imu" args="0 0 0 1.57 0 0 /base_footprint /imu 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="base_to_laser" args="0.056 -0.139 -0.0918 3.14 0 3.14 /base_footprint /laser 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="base_to_camera" args="-0.34 -0.3075 0.86 1.57 0 1.57 /base_footprint /camera 30"/>
+
+ <node pkg="tf" type="static_transform_publisher"
+	 name="baselink_to_basefootprint" args="0.0 0.0 -0.25 0 0 0.0 /base_link /base_footprint 30"/>
+    <arg name="map_size" default="2048"/>
+  <arg name="pub_map_odom_transform" default="true"/>
+  <!--amcl start-->
+<node pkg="amcl" type="amcl" name="amcl" output="screen">
+  <!-- Publish scans from best pose at a max of 10 Hz -->
+    
+    <!-- Map size / start point -->
+    <param name="map_resolution" value="0.050"/>
+    <param name="map_size" value="$(arg map_size)"/>
+    <param name="map_start_x" value="0.5"/>
+    <param name="map_start_y" value="0.5" />
+    <param name="map_multi_res_levels" value="2" />
+
+    
+    <!-- Map update parameters -->
+    <param name="update_factor_free" value="0.4"/>
+    <param name="update_factor_occupied" value="0.9" />    
+    <param name="map_update_distance_thresh" value="0.4"/>
+    <param name="map_update_angle_thresh" value="0.06" />
+    <param name="laser_z_min_value" value = "-1.0" />
+    <param name="laser_z_max_value" value = "1.0" />
+    
+  <param name="map_frame" value="map" />
+  <param name="pub_map_odom_transform" value="$(arg pub_map_odom_transform)"/>
+
+    <!-- Advertising config --> 
+    <param name="advertise_map_service" value="true"/>
+
+  <param name="odom_model_type" value="diff"/>
+  <param name="odom_alpha5" value="0.1"/>
+  <param name="scan_topic" value="scan"/>
+  <param name="transform_tolerance" value="0.2" />
+  <param name="gui_publish_rate" value="10.0"/>
+  <param name="laser_max_beams" value="30"/>
+  <param name="min_particles" value="500"/>
+  <param name="max_particles" value="5000"/>
+  <param name="kld_err" value="0.05"/>
+  <param name="kld_z" value="0.99"/>
+  <param name="odom_alpha1" value="0.2"/>
+  <param name="odom_alpha2" value="0.2"/>
+  <!-- translation std dev, m -->
+  <param name="odom_alpha3" value="0.8"/>
+  <param name="odom_alpha4" value="0.2"/>
+  <param name="laser_z_hit" value="0.5"/>
+  <param name="laser_z_short" value="0.05"/>
+  <param name="laser_z_max" value="0.05"/>
+  <param name="laser_z_rand" value="0.5"/>
+  <param name="laser_sigma_hit" value="0.2"/>
+  <param name="laser_lambda_short" value="0.1"/>
+  <param name="laser_lambda_short" value="0.1"/>
+  <param name="laser_model_type" value="likelihood_field"/>
+  <!-- <param name="laser_model_type" value="beam"/> -->
+  <param name="laser_likelihood_max_dist" value="2.0"/>
+  <param name="update_min_d" value="0.2"/>
+  <param name="update_min_a" value="0.5"/>
+  <param name="odom_frame_id" value="odom"/>
+  <param name="base_frame_id" value="base_footprint"/>
+  <param name="resample_interval" value="1"/>
+  <param name="transform_tolerance" value="0.1"/>
+  <param name="recovery_alpha_slow" value="0.0"/>
+  <param name="recovery_alpha_fast" value="0.0"/>
+  
+</node>
+
+<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  <rosparam file="/opt/ros/melodic/share/amcl/param/costmap_commom_params.yaml" command="load" ns="global_costmap" />
+  <rosparam file="/opt/ros/melodic/share/amcl/param/costmap_commom_params.yaml" command="load" ns="local_costmap" />
+  <rosparam file="/opt/ros/melodic/share/amcl/param/local_costmap_params.yaml" command="load" />
+  <rosparam file="/opt/ros/melodic/share/amcl/param/global_costmap_params.yaml" command="load" />
+  <rosparam file="/opt/ros/melodic/share/amcl/param/move_base_params.yaml" command="load" />
+  <rosparam file="/opt/ros/melodic/share/amcl/param/teb_local_planner_params.yaml" command="load" />  
+</node>
+<node pkg="rviz" name="rviz" type="rviz" args="-d $(find amcl)/rviz/rviz.rviz" />
+</launch>
+
