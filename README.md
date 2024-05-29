@@ -1,4 +1,7 @@
 # GoBot Mobile Robot
+- ** This README will be updated further, please refer to https://github.com/Hiuching-Jyu/Gobot-Mobile-Robot for latest updates**
+- ** Please follow the MIT license when you try to copy or apply this repository in your project.**
+
 ## 0. Hardware Configuration
 - Controller: Jetson Nno B01 from Hiwonder, instruction refer to https://drive.google.com/drive/folders/1GBiwRRy0NYdtOc2z0U2wGOYut7UGFls6
 - Chasis: PWM control Ackermann chasis
